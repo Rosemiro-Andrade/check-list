@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Check List - Manutenção Preventiva</title>
+  <link rel="stylesheet" href="cheklist.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="container" id="formulario">
+    <div class="header">
+      <div class="title">CHECK LIST</div>
+      <div class="subtitle">MANUTENÇÃO PREVENTIVA</div>
+    </div>
+
+    <div class="periodicidade">
+      <label for="periodicidade">Periodicidade:</label>
+      <select id="periodicidade">
+        <option value="quinzenal">Quinzenal</option>
+        <option value="mensal">Mensal</option>
+        <option value="trimestral">Trimestral</option>
+        <option value="semestral">Semestral</option>
+        <option value="anual">Anual</option>
+      </select>
+    </div>
+
+    <div class="meta">
+      <div class="field"><label>Equipamento</label><input id="equipamento" type="text" placeholder="Ex: Servidor X"/></div>
+      <div class="field"><label>Ativo Fixo</label><input id="ativo" type="text" /></div>
+      <div class="field"><label>Módulo</label><input id="modulo" type="text" /></div>
+      <div class="field"><label>SSD</label><input id="ssd" type="text" /></div>
+    </div>
+
+    <table class="items" id="itemsTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Descrição</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td contenteditable="true">Clique para editar</td>
+          <td contenteditable="true">Clique para editar</td>
+          <td contenteditable="true">Clique para editar</td>
+        </tr>
+      </tbody>
+        <!-- Botão para adicionar linha -->
+        <button onclick="adicionarLinha()" class="no-print">Adicionar Linha</button>
+        <button onclick="removerLinha()" class="no-print">Remover Última Linha</button>
+
+        <!-- Script JS -->
+        <script>
+          function adicionarLinha() {
+            const tabela = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+            const novaLinha = tabela.insertRow();
+
+            for (let i = 0; i < 3; i++) {
+              const celula = novaLinha.insertCell(i);
+              celula.contentEditable = "true";
+              celula.textContent = "Clique para editar";
+            }
+          }
+          function removerLinha() {
+            const tabela = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+            const numeroLinhas = tabela.rows.length;
+
+            // Garante que sempre haja pelo menos uma linha
+            if (numeroLinhas > 1) {
+              tabela.deleteRow(numeroLinhas - 1);
+            } else {
+              alert("A tabela deve ter pelo menos uma linha.");
+            }
+          }
+        </script>
+
+    </table>
+
+    <div class="obs">
+      <div>
+        <label>OBSERVAÇÕES:</label>
+        <textarea id="observacoes" placeholder="Observações..."></textarea>
+      </div>
+
+      <div class="footer-box">
+        <div class="footer-row">
+          <div>DATA:</div> <input id="data" type="date" />
+        </div>
+        <div class="footer-row">
+          <div>TÉCNICO:</div> <input id="tecnico" type="text" />
+        </div>
+        <div class="footer-row">
+          <div>ID:</div> <input id="ident" type="text" />
+        </div>
+      </div>
+    </div>
+<!--  -->
+    <div class="controls">
+      <button type="button" id="generatePdf" class="no-print">Gerar PDF</button>
+    </div>
+
+    <input type="file" id="fileLoader" accept=".json" style="display:none" />
+  </div>  
+  <!-- Área para colocar os scripts JavaScript na próxima parte -->
+<script>
+  // Função para coletar dados do formulário
+  function collectData() {
+    return {
+      equipamento: document.getElementById('equipamento')?.value || '',
+      ativo: document.getElementById('ativo')?.value || '',
+      modulo: document.getElementById('modulo')?.value || '',
+      ssd: document.getElementById('ssd')?.value || '',
+      observacoes: document.getElementById('observacoes')?.value || '',
+      data: document.getElementById('data')?.value || '',
+      tecnico: document.getElementById('tecnico')?.value || '',
+      ident: document.getElementById('ident')?.value || '',
+      periodicidade: getPeriodicidadeFromURL()
+    };
+  }
+
+  // Função para obter a periodicidade pela URL
+  function getPeriodicidadeFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('periodicidade') || 'quinzenal';
+  }
+
+  // Aplicar a periodicidade no título
+  function setPeriodicidadeTitulo() {
+    const periodicidade = getPeriodicidadeFromURL();
+    const sub = document.querySelector('.subtitle');
+    if (sub) {
+      sub.textContent += ` (${periodicidade.toUpperCase()})`;
+    }
+  }
+
+  // Gerar PDF (versão ajustada)
+  document.getElementById('generatePdf')?.addEventListener('click', () => {
+    const form = document.getElementById('formulario');
+    if (!form) return;
+
+  // Esconde botões e elementos não imprimíveis
+    form.querySelectorAll('.no-print').forEach(el => el.style.display = 'none');
+
+    const options = {
+      margin: [10, 10, 10, 10],
+      filename: 'checklist.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2, // aumenta a resolução do print
+        useCORS: true,
+        logging: false
+      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(form).save().then(() => {
+    // Reexibe os botões após gerar PDF
+      form.querySelectorAll('.no-print').forEach(el => el.style.display = '');
+    }).catch(err => {
+      console.error('Erro ao gerar PDF:', err);
+      form.querySelectorAll('.no-print').forEach(el => el.style.display = '');
+    });
+  });
+
+  // Ao carregar, aplica título dinâmico e recupera dados do localStorage
+  window.addEventListener('load', () => {
+    setPeriodicidadeTitulo();
+    const saved = localStorage.getItem('formulario-v1');
+    if (saved) {
+      applyData(JSON.parse(saved));
+    }
+  });
+
+  // Salva automaticamente no localStorage ao digitar
+  document.getElementById('formulario')?.addEventListener('input', () => {
+    try {
+      const d = collectData();
+      localStorage.setItem('formulario-v1', JSON.stringify(d));
+    } catch (e) {}
+  });
+</script>
+</body>
+</html>
