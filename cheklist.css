@@ -1,65 +1,130 @@
+/* === ESTILO GLOBAL === */
 body {
-  font-family: Arial, sans-serif;
-  /*background: white;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100%;
-  box-sizing: border-box;*/
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f8f9fb;
+  color: #222;
+  margin: 0;
+  padding: 20px;
 }
 
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 
-
+/* === CABEÇALHO === */
 .header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
+.header .title {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
+.header .subtitle {
+  font-size: 16px;
+  color: #555;
+}
+
+/* === SEÇÃO DE PERIODICIDADE === */
 .periodicidade {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.periodicidade label {
+  font-weight: bold;
+}
+
+/* === CAMPOS META === */
 .meta {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .field {
-  flex: 1;
+  flex: 1 1 200px;
   display: flex;
   flex-direction: column;
 }
 
 .field label {
   font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .field input {
-  padding: 5px;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
-
+/* === TABELA DE ITENS === */
 .items {
-  margin-top: 8px;
-  border-collapse: collapse;
   width: 100%;
-  border: 1px solid var(--border);
-  font-size: 13px;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
+.items th {
+  background: #e9ecef;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #bbb;
+}
 
+.items td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.items td[contenteditable="true"] {
+  background-color: #fafafa;
+  cursor: text;
+}
+
+button {
+  background: #0078d7;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-top: 8px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+/* === OBSERVAÇÕES E RODAPÉ === */
 .obs {
-  margin-top: 12px;
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr 260px;
-  gap: 12px;
+  grid-template-columns: 1fr 250px;
+  gap: 20px;
 }
 
 .obs textarea {
-  min-height: 100px;
-  width: 90%;
+  min-height: 120px;
+  width: 100%;
   padding: 10px;
   border: 1px solid #aaa;
   border-radius: 4px;
@@ -67,15 +132,36 @@ body {
   font-size: 14px;
 }
 
+.footer-box {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .footer-row {
   display: flex;
-  justify-content: space-around;
-  gap: 4px;
+  justify-content: space-between;
   align-items: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 
+.footer-row input {
+  width: 60%;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+
+/* === BOTÕES === */
+.controls {
+  text-align: right;
+  margin-top: 25px;
+}
+
+/* === IMPRESSÃO / PDF === */
 @media print {
   .no-print {
     display: none !important;
@@ -86,28 +172,18 @@ body {
   }
 
   .container {
-    width: 210mm;
-    margin: 0 auto;
-    padding: 10mm;
-    box-sizing: border-box;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    width: 190mm;
+    margin: auto;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  table, th, td {
-    border: 1px solid #000;
+  .items th {
+    background: #ddd !important;
   }
 
   th, td {
-    padding: 5px;
-    text-align: left;
+    border: 1px solid #000;
   }
 }
-
-
-
-
-
