@@ -13,9 +13,8 @@
     <div class="header">
       <img src="image/zilia.png" alt="Zilia Logotipo" class="logo-zilia">  
     </div>
-      <h1>CHECK LIST</h1>
-      <h2>MANUTENÇÃO PREVENTIVA</h2>
-    </div>
+        <h1>CHECK LIST</h1>
+        <h2>MANUTENÇÃO PREVENTIVA</h2>
 
     <div class="periodicidade">
       <label for="periodicidade">Periodicidade:</label>
@@ -123,14 +122,16 @@
       const headers = [["Item", "Descrição", "Status"]];
       const tbody = document.getElementById('itemsTable').querySelector('tbody');
       const data = Array.from(tbody.rows).map(row => 
-        Array.from(row.cells).map(cell => cell.querySelector('input').value)
+        Array.from(row.cells).map(cell => cell.querySelector('input').value || "-")
       );
 
       doc.autoTable({
         startY: 70,
         head: headers,
         body: data,
-        columStyle: {0:{cellWidth: 50}, 2:{cellWidth:40}},
+        columStyle: {
+          0:{cellWidth: 50, overflow: 'ellipsize'},
+          2:{cellWidth:40, overflow: 'ellipsize'}},
         styles: { fontSize: 12 },
         theme: 'grid',
         headStyles: { fillColor: [0, 0, 0] },
@@ -158,14 +159,18 @@
       const agora = new Date();
       const horaText = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
 
+      const observacoesLinhas = doc.splitTextToSize(observacoes, 180);
+
       // Insere no PDF
       doc.text("Observações:", 14, finalY + 10);
-      doc.text(observacoes, 14, finalY + 16);
+      doc.text(observacoesLinhas, 14, finalY + 16);
 
-      doc.text(`DATA: ${dataText}`, 14, finalY + 30);
-      doc.text(`HORA: ${horaText}`, 60, finalY + 30); // você pode ajustar a posição horizontal
-      doc.text(`TÉCNICO: ${tecnico}`, 14, finalY + 36);
-      doc.text(`ID: ${ident}`, 14, finalY + 42);
+      const novaPosY = finalY + 16 + observacoesLinhas.length * 7;
+
+      doc.text(`DATA: ${dataText}`, 14, novaPosY + 10);
+      doc.text(`HORA: ${horaText}`, 60, novaPosY + 10); // você pode ajustar a posição horizontal
+      doc.text(`TÉCNICO: ${tecnico}`, 14, novaPosY + 16);
+      doc.text(`ID: ${ident}`, 14, novaPosY + 22);
 
       // Salva o PDF
       doc.save('checklist.pdf');
