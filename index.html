@@ -20,6 +20,7 @@
     <div class="periodicidade">
       <label for="periodicidade">Periodicidade:</label>
       <select id="periodicidade">
+        <option value="semanal">Semanal</option>
         <option value="quinzenal">Quinzenal</option>
         <option value="mensal">Mensal</option>
         <option value="trimestral">Trimestral</option>
@@ -29,8 +30,8 @@
     </div>
 
     <div class="meta">
-      <div class="field"><label>Equipamento</label><input id="equipamento" type="text" placeholder="Ex: Servidor X"/></div>
-      <div class="field"><label>Ativo Fixo</label><input id="ativo" type="text" /></div>
+      <div class="field"><label>Equipamento</label><input id="equipamento" type="text" placeholder="Ex: Exicon"/></div>
+      <div class="field"><label>Ativo/Linha/Tag</label><input id="ativo" type="text" /></div>
       <div class="field"><label>Módulo</label><input id="modulo" type="text" /></div>
       <div class="field"><label>SSD</label><input id="ssd" type="text" /></div>
     </div>
@@ -113,7 +114,7 @@
 
       doc.setFontSize(10);
       doc.text(`Equipamento: ${equipamento}`, 14, 40);
-      doc.text(`Ativo Fixo: ${ativo}`, 14, 46);
+      doc.text(`Ativo/Linha/Tag: ${ativo}`, 14, 46);
       doc.text(`Módulo: ${modulo}`, 14, 52);
       doc.text(`SSD: ${ssd}`, 14, 58);
       doc.text(`Periodicidade: ${periodicidade}`, 14, 64);
@@ -129,6 +130,7 @@
         startY: 70,
         head: headers,
         body: data,
+        columStyle: {0:{cellWidth: 50}, 2:{cellWidth:40}},
         styles: { fontSize: 12 },
         theme: 'grid',
         headStyles: { fillColor: [0, 0, 0] },
@@ -136,20 +138,38 @@
       });
 
       // Observações e rodapé
-      const finalY = doc.lastAutoTable.finalY || 70;
-      const observacoes = document.getElementById('observacoes').value;
-      const dataText = document.getElementById('data').value;
-      const tecnico = document.getElementById('tecnico').value;
-      const ident = document.getElementById('ident').value;
+      const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY : 70;
 
+      // Pega valores dos campos
+      const observacoes = document.getElementById('observacoes').value || "-";
+      let dataText = document.getElementById('data').value;
+      const tecnico = document.getElementById('tecnico').value || "-";
+      const ident = document.getElementById('ident').value || "-";
+
+      // Formata a data no padrão DD/MM/AAAA, se existir
+      if (dataText) {
+        const [ano, mes, dia] = dataText.split('-');
+        dataText = `${dia}/${mes}/${ano}`;
+      } else {
+        dataText = "-";
+      }
+
+      // Formata a hora atual no padrão HH:MM
+      const agora = new Date();
+      const horaText = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
+
+      // Insere no PDF
       doc.text("Observações:", 14, finalY + 10);
-      doc.text(observacoes || "-", 14, finalY + 16);
+      doc.text(observacoes, 14, finalY + 16);
 
       doc.text(`DATA: ${dataText}`, 14, finalY + 30);
+      doc.text(`HORA: ${horaText}`, 60, finalY + 30); // você pode ajustar a posição horizontal
       doc.text(`TÉCNICO: ${tecnico}`, 14, finalY + 36);
       doc.text(`ID: ${ident}`, 14, finalY + 42);
 
+      // Salva o PDF
       doc.save('checklist.pdf');
+
     });
   </script>
 </body>
