@@ -59,7 +59,7 @@ body {
 
 .periodicidade select {
   padding: 8px;
-  width: 100%;
+  width: 10%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -76,7 +76,7 @@ body {
 }
 
 .meta .field input {
-  width: 100%;
+  width: 30%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -92,7 +92,7 @@ body {
 .tabela-dinamica th,
 .tabela-dinamica td {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   text-align: left;
 }
 
