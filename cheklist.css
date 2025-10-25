@@ -1,189 +1,240 @@
-/* === ESTILO GLOBAL === */
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f8f9fb;
-  color: #222;
+/* Reset básico */
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Fonte padrão */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #1a1919;
+  background-color: #f4f4f4;
+}
+
+/* Container principal */
 .container {
-  max-width: 900px;
-  margin: auto;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 25px 30px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* === CABEÇALHO === */
+/* Cabeçalho */
 .header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.header .title {
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.header .subtitle {
-  font-size: 16px;
-  color: #555;
-}
-
-/* === SEÇÃO DE PERIODICIDADE === */
-.periodicidade {
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.header img {
+  width: 80px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #0056b3;
+}
+
+.header h2 {
+  font-size: 18px;
+  color: #313030;
+}
+
+/* Seção de periodicidade */
+.periodicidade {
+  margin-bottom: 20px;
 }
 
 .periodicidade label {
   font-weight: bold;
+  margin-right: 10px;
 }
 
-/* === CAMPOS META === */
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 25px;
+.periodicidade select {
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.field {
-  flex: 1 1 200px;
-  display: flex;
-  flex-direction: column;
+/* Campos de entrada */
+.meta .field {
+  margin-bottom: 15px;
 }
 
-.field label {
-  font-size: 13px;
+.meta .field label {
+  display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.field input {
+.meta .field input {
+  width: 100%;
   padding: 8px;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
 }
 
-/* === TABELA DE ITENS === */
-.items {
+/* Tabela dinâmica */
+.tabela-dinamica table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
   margin-bottom: 20px;
 }
 
-.items th {
-  background: #e9ecef;
+.tabela-dinamica th,
+.tabela-dinamica td {
+  padding: 10px;
+  border: 1px solid #ddd;
   text-align: left;
-  padding: 8px;
-  border: 1px solid #bbb;
 }
 
-.items td {
-  padding: 8px;
-  border: 1px solid #ccc;
+.tabela-dinamica th {
+  background-color: #1b232c;
+  color: white;
 }
 
-.items td[contenteditable="true"] {
-  background-color: #fafafa;
-  cursor: text;
-}
-
-button {
-  background: #0078d7;
+.tabela-dinamica button {
+  padding: 8px 12px;
+  background-color: #0056b3;
   color: white;
   border: none;
-  padding: 8px 14px;
-  margin-top: 8px;
-  margin-right: 5px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  margin-top: 10px;
 }
 
-button:hover {
-  background: #005fa3;
+.tabela-dinamica button:hover {
+  background-color: #004494;
 }
 
-/* === OBSERVAÇÕES E RODAPÉ === */
+/* Observações */
 .obs {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1fr 250px;
-  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.obs label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .obs textarea {
-  min-height: 120px;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  resize: vertical;
-  font-size: 14px;
-}
-
-.footer-box {
+  height: 100px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  resize: vertical;
 }
 
-.footer-row {
+/* Rodapé */
+.footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
+  margin-bottom: 20px;
 }
 
-.footer-row input {
-  width: 60%;
-  padding: 5px;
-  border: 1px solid #aaa;
-  border-radius: 3px;
+.footer label {
+  font-weight: bold;
 }
 
-/* === BOTÕES === */
+.footer input {
+  width: 30%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botões */
 .controls {
-  text-align: right;
-  margin-top: 25px;
+  text-align: center;
 }
 
-/* === IMPRESSÃO / PDF === */
-@media print {
-  .no-print {
-    display: none !important;
-  }
+.controls button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-  body {
-    background: white;
-  }
+.controls button:hover {
+  background-color: #218838;
+}
+.items td:nth-child(2) {
+  width: 200px;         /* largura da coluna Descrição */
+}
 
+/* Responsividade */
+@media (max-width: 768px) {
   .container {
-    box-shadow: none;
-    border: none;
-    padding: 0;
-    width: 190mm;
-    margin: auto;
+    padding: 15px;
   }
 
-  .items th {
-    background: #ddd !important;
+  .header h1 {
+    font-size: 20px;
   }
 
-  th, td {
-    border: 1px solid #000;
+  .header h2 {
+    font-size: 16px;
+  }
+
+  .meta .field input,
+  .periodicidade select,
+  .footer input {
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer label {
+    margin-bottom: 5px;
+  }
+
+  .footer input {
+    margin-bottom: 10px;
   }
 }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #004aad;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #004aad;
+  text-align: right;
+  flex-grow: 1;
+}
+
+.subtitle {
+  font-size: 16px;
+  text-align: right;
+  color: #222;
+}
+
+
+
