@@ -96,7 +96,7 @@
     // Função para gerar PDF com jsPDF + AutoTable
     document.getElementById('generatePdf').addEventListener('click', () => {
       // Primeiro, faz o fetch do arquivo Base64
-      fetch('/image/zilia_base64.txt')
+      fetch('https://rosemiro-andrade.github.io/check-list//image/zilia_base64.txt')
         .then(response => response.text())
         .then(base64Img => {
           gerarPDF(base64Img);
@@ -190,3 +190,4 @@
   </script>
 </body>
 </html>
+
