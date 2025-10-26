@@ -95,6 +95,15 @@
 
     // Função para gerar PDF com jsPDF + AutoTable
     document.getElementById('generatePdf').addEventListener('click', () => {
+      // Primeiro, faz o fetch do arquivo Base64
+      fetch('/image/zilia_base64.txt')
+        .then(response => response.text())
+        .then(base64Img => {
+          gerarPDF(base64Img);
+        })
+        .catch(err => console.error('erro ao carregar',err));
+    });
+    function gerarPDF(base64Img) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
@@ -103,6 +112,8 @@
       doc.text("CHECK LIST", 105, 15, null, null, "center");
       doc.setFontSize(12);
       doc.text("MANUTENÇÃO PREVENTIVA", 105, 25, null, null, "center");
+
+      doc.addImage(base64Img, 'PNG', 14, 14, 50, 20);
 
       // Dados principais
       const equipamento = document.getElementById('equipamento').value;
@@ -175,7 +186,7 @@
       // Salva o PDF
       doc.save('checklist.pdf');
 
-    });
+    };
   </script>
 </body>
 </html>
